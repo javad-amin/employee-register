@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "employee-register"
+version = "0.1.0"
+description = ""
+authors = ["javad-amin <javad.amin@outlook.com>"]
+readme = "README.md"
+packages = [{include = "employee_register"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
