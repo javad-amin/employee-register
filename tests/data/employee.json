@@ -1,0 +1,22 @@
+[
+    {
+        "first_name": "Freddie Mercury",
+        "last_name": "Mercury",
+        "email": "fredde@queen.com"
+    },
+    {
+        "first_name": "Brian",
+        "last_name": "May",
+        "email": "bm@queen.com"
+    },
+    {
+        "first_name": "Roger Taylor",
+        "last_name": "Taylor",
+        "email": "roggy@queen.com"
+    },
+    {
+        "first_name": "John",
+        "last_name": "Deacon",
+        "email": "johnny@queen.com"
+    }
+]
