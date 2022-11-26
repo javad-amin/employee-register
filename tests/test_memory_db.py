@@ -39,3 +39,10 @@ def test_get_employees_empty():
 
 def test_get_employees(pre_populated_database: MemoryDB) -> None:
     assert len(pre_populated_database.get_employees().content) == 4
+
+    pre_populated_database.add_employee(
+        first_name="Lady",
+        last_name="Gaga",
+        email="lady@queen.com",
+    )
+    assert len(pre_populated_database.get_employees().content) == 5
