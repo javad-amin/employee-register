@@ -24,4 +24,5 @@ class MemoryDB:
         return DatabaseResponse(content=new_employee)
 
     def get_employees(self) -> DatabaseResponse:
-        return DatabaseResponse(content=[])
+        employees_response = [employee.__dict__ for employee in self.employees]
+        return DatabaseResponse(content=employees_response)
