@@ -1,3 +1,4 @@
+import uuid
 from dataclasses import dataclass, field
 from typing import Final, Union
 
@@ -29,7 +30,7 @@ class MemoryDB:
         self, first_name: str, last_name: str, email: str
     ) -> DatabaseResponse:
         new_employee = {
-            "identifier": "917c1ecd-4e07-4a1c-8f9e-f189e95564e6",
+            "identifier": str(uuid.uuid4()),
             "first_name": first_name,
             "last_name": last_name,
             "email": email,
@@ -49,10 +50,17 @@ def test_add_employee() -> None:
     memory_db = MemoryDB()
     response = memory_db.add_employee(**employee)
 
-    expected = employee.copy()
-    expected["identifier"] = "917c1ecd-4e07-4a1c-8f9e-f189e95564e6"
-
     assert isinstance(response, DatabaseResponse)
     assert response.status == ResponseStatus.SUCCESS
-    assert response.content == expected
-    assert memory_db.employees == [EmployeeItem(**expected)]
+
+    assert response.content.get("first_name") == employee["first_name"]
+    assert response.content.get("last_name") == employee["last_name"]
+    assert response.content.get("email") == employee["email"]
+    assert uuid.UUID(response.content.get("identifier"))
+
+    saved_employees = memory_db.employees
+
+    assert saved_employees[0].first_name == employee["first_name"]
+    assert saved_employees[0].last_name == employee["last_name"]
+    assert saved_employees[0].email == employee["email"]
+    assert uuid.UUID(saved_employees[0].identifier)
