@@ -10,7 +10,7 @@ class ResponseStatus:
 
 @dataclass
 class DatabaseResponse:
-    content: dict
+    content: dict | list
     status: str = ResponseStatus.SUCCESS
 
 
@@ -40,6 +40,9 @@ class MemoryDB:
 
         return DatabaseResponse(content=new_employee)
 
+    def get_employees(self) -> DatabaseResponse:
+        return DatabaseResponse(content=[])
+
 
 def test_add_employee() -> None:
     employee = {
@@ -64,3 +67,11 @@ def test_add_employee() -> None:
     assert saved_employees[0].last_name == employee["last_name"]
     assert saved_employees[0].email == employee["email"]
     assert uuid.UUID(saved_employees[0].identifier)
+
+
+def test_get_employees_empty():
+    memory_db = MemoryDB()
+    response = memory_db.get_employees()
+    employees = response.content
+
+    assert employees == []
