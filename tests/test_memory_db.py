@@ -35,3 +35,7 @@ def test_get_employees_empty():
     employees = response.content
 
     assert employees == []
+
+
+def test_get_employees(pre_populated_database: MemoryDB) -> None:
+    assert len(pre_populated_database.get_employees().content) == 4
