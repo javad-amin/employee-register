@@ -1,47 +1,7 @@
 import uuid
-from dataclasses import dataclass, field
-from typing import Final
 
-
-class ResponseStatus:
-    FAILURE: Final = "failure"
-    SUCCESS: Final = "success"
-
-
-@dataclass
-class DatabaseResponse:
-    content: dict | list
-    status: str = ResponseStatus.SUCCESS
-
-
-@dataclass
-class EmployeeItem:
-    identifier: str
-    email: str
-    first_name: str = ""
-    last_name: str = ""
-
-
-@dataclass
-class MemoryDB:
-    employees: list[EmployeeItem] = field(default_factory=list)
-
-    def add_employee(
-        self, first_name: str, last_name: str, email: str
-    ) -> DatabaseResponse:
-        new_employee = {
-            "identifier": str(uuid.uuid4()),
-            "first_name": first_name,
-            "last_name": last_name,
-            "email": email,
-        }
-
-        self.employees.append(EmployeeItem(**new_employee))
-
-        return DatabaseResponse(content=new_employee)
-
-    def get_employees(self) -> DatabaseResponse:
-        return DatabaseResponse(content=[])
+from database.memory_db import MemoryDB
+from database.response import DatabaseResponse, ResponseStatus
 
 
 def test_add_employee() -> None:
