@@ -28,6 +28,7 @@ def test_employee_missing_email() -> None:
 
 
 def test_employee_has_all_required_attributes() -> None:
+    """Contains all the employee attributes"""
     employee = Employee(first_name="Lady", last_name="Gaga", email="lady@gaga.com")
 
     assert employee.first_name == "Lady"
@@ -36,5 +37,6 @@ def test_employee_has_all_required_attributes() -> None:
 
 
 def test_validate_email() -> None:
+    """An invalid email address is not allowed"""
     with pytest.raises(Exception):
         Employee(first_name="Lady", last_name="Gaga", email="lady_gaga.com")
