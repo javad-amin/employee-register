@@ -1,6 +1,6 @@
 import uuid
 from dataclasses import dataclass, field
-from typing import Final, Union
+from typing import Final
 
 
 class ResponseStatus:
@@ -10,8 +10,8 @@ class ResponseStatus:
 
 @dataclass
 class DatabaseResponse:
+    content: dict
     status: str = ResponseStatus.SUCCESS
-    content: dict | str = ""
 
 
 @dataclass

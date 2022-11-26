@@ -21,3 +21,21 @@ flake8 = "^6.0.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.10"
+pretty = true
+cache_dir = ".mypy_cache"
+files = ["src", "tests"]
+ignore_missing_imports = true
+
+[tool.flake8]
+ignore = ["E501"]
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".venv",
+    ".pytest_cache",
+    ".vscode",
+    "__pycache__",
+]
