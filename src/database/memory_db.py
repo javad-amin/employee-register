@@ -1,22 +1,17 @@
 import uuid
 from dataclasses import dataclass, field
 
+from database.exception import EmployeeAlreadyExists, EmployeeNotFound
 from database.item import EmployeeItem
-from database.response import DatabaseResponse, ResponseStatus
 
 
 @dataclass
 class MemoryDB:
     employees: list[EmployeeItem] = field(default_factory=list)
 
-    def add_employee(
-        self, first_name: str, last_name: str, email: str
-    ) -> DatabaseResponse:
+    def add_employee(self, first_name: str, last_name: str, email: str) -> dict:
         if self._email_already_registered(email):
-            return DatabaseResponse(
-                "Employee with the given email address is already registered.",
-                ResponseStatus.FAILURE,
-            )
+            raise EmployeeAlreadyExists("Email address is already registered.")
 
         new_employee = {
             "identifier": str(uuid.uuid4()),
@@ -27,23 +22,17 @@ class MemoryDB:
 
         self.employees.append(EmployeeItem(**new_employee))
 
-        return DatabaseResponse(content=new_employee)
+        return new_employee
 
-    def get_employees(self) -> DatabaseResponse:
-        employees_response = [employee.__dict__ for employee in self.employees]
-        return DatabaseResponse(content=employees_response)
+    def get_employees(self) -> list[dict]:
+        return [employee.__dict__ for employee in self.employees]
 
-    def remove_employee(self, identifier: str) -> DatabaseResponse:
+    def remove_employee(self, identifier: str) -> None:
         for i, employee in enumerate(self.employees):
             if identifier == employee.identifier:
                 self.employees.pop(i)
-                return DatabaseResponse(
-                    {"message": "Employee was removed successfully"}
-                )
-        return DatabaseResponse(
-            f"The employee with employee identifier {identifier} not found.",
-            ResponseStatus.FAILURE,
-        )
+                return
+        raise EmployeeNotFound(f"Employee with {identifier=} not found.")
 
     def _email_already_registered(self, email) -> bool:
         for employee in self.employees:
