@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["javad-amin <javad.amin@outlook.com>"]
 readme = "README.md"
-packages = [{include = "employee_register"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
